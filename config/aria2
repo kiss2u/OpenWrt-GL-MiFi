@@ -1,0 +1,46 @@
+# You can use most aria2 command-line options, replace '-' with '_'.
+# eg. 'rpc-secret' ==> 'rpc_secret'
+#
+# We do not support all options at this time. But you can add any option
+# with 'list extra_settings'.
+#
+# You can also add new config sections to define multi instance.
+#
+config aria2 'main'
+  option enabled '1'
+  option   'aria2'
+  option dir '/mnt/sda1/aria2'
+  option config_dir '/var/etc/aria2'
+  option bt_enable_lpd 'true'
+  option enable_dht 'true'
+  option follow_torrent 'true'
+  option file_allocation 'trunc'
+  option save_session_interval '30'
+  list bt_tracker udp://tracker.coppersurfer.tk:6969/announce,http://tracker.internetwarriors.net:1337/announce,udp://tracker.opentrackr.org:1337/announce,udp://9.rarbg.to:2710/announce,udp://exodus.desync.com:6969/announce,http://tracker3.itzmx.com:6961/announce,udp://explodie.org:6969/announce,udp://ipv4.tracker.harry.lu:80/announce,udp://denis.stalker.upeer.me:6969/announce,udp://tracker4.itzmx.com:2710/announce,udp://tracker.torrent.eu.org:451/announce,udp://tracker.tiny_vps.com:6969/announce,udp://tracker.port443.xyz:6969/announce,udp://thetracker.org:80/announce,udp://open.demonii.si:1337/announce,udp://bt.xxx_tracker.com:2710/announce,udp://tracker1.wasabii.com.tw:6969/announce,udp://tracker.dler.org:6969/announce,udp://tracker.cyberia.is:6969/announce,udp://retracker.lanta_net.ru:2710/announce
+  list extra_settings 'disk-cache=32M'
+  list extra_settings 'continue=true'
+  list extra_settings 'max-concurrent-downloads=5'
+  list extra_settings 'max-connection-per-server=15'
+  list extra_settings 'max-overall-download-limit=0'
+  list extra_settings 'max-download-limit=0'
+  list extra_settings 'max-overall-upload-limit=0'
+  list extra_settings 'max-upload-limit=0'
+  list extra_settings 'disable-ipv6=true'
+  list extra_settings 'min-split-size=10M'
+  list extra_settings 'split=10'
+  list extra_settings 'input-file=/etc/aria2/aria2.session'
+  list extra_settings 'save-session=/var/etc/aria2/aria2.session'
+  list extra_settings 'enable-rpc=true'
+  list extra_settings 'rpc-allow-origin-all=true'
+  list extra_settings 'rpc-listen-all=true'
+  list extra_settings 'rpc-listen-port=6800'
+  list extra_settings 'rpc-secret=secret'
+  list extra_settings 'peer-id-prefix=-TR2770-'
+  list extra_settings 'dht-listen-port=6881-6999'
+  list extra_settings 'user-agent=Transmission/2.77'
+  list extra_settings 'bt-seed-unverified=true'
+  list extra_settings 'bt-save-metadata=true'
+  list extra_settings 'enable-peer-exchange=true'
+  list extra_settings 'dht-file-path=/var/etc/aria2/dht.dat'
+  list extra_settings 'max-connection-per-server=13'
+  list extra_settings 'bt-max-peers=100'

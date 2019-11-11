@@ -15,6 +15,7 @@ cd ./openwrt
 
 ```
 wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/.config -O .config
+make download
 ```
 
 ## Build image
@@ -36,36 +37,10 @@ Subtarget (Generic)  --->
 Target Profile (Default Profile (all drivers))  --->
   GL.iNet GL-MiFi
 
-Kernel modules  --->
-  Filesystems  --->
-    kmod-fs-ext4
-    kmod-fs-vfat
-    kmod-fs-xfs
-  USB Support  --->
-    kmod-usb-net
-    kmod-usb-net-rndis
-    kmod-usb-serial
-    kmod-usb-serial-option
-    kmod-usb-storage
-    kmod-usb2
-
 LuCI  --->
-  Applications  --->
-    luci-app-aria2
-    luci-app-frpc
-    luci-app-openvpn
-    luci-app-openvpn-server
-  Protocols  --->
-    luci-proto-qmi
-    luci-proto-openconnect
-    luci-proto-3g
-
-Utilities  --->
-  Filesystem  --->
-    e2fsprogs
-    f2fsck
-  Disc  --->
-    lsblk
-    fdisk
-    blkid
+  Collections  --->
+    luci
+  Modules  --->
+    Translations  --->
+      Chinese (zh-cn)
 ```
