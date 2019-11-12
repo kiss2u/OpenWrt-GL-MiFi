@@ -128,8 +128,7 @@ Utilities  --->
 automount
 
 # Disable LTE modem when the lan is working
-echo "* * * * * /bin/ping -I eth0 -c 3 114.114.114.114 &> /dev/null && /sbin/ifdown wwan; ubus call network reload" >> crontab
 
-
-
+```
 * * * * * /bin/ping -I eth0 -c 3 114.114.114.114 &> /dev/null && /sbin/ifdown wwan; ubus call network reload || /sbin/ifup wwan; ubus call network reload
+```
