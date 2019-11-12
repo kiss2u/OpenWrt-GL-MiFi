@@ -37,7 +37,7 @@ EOF
 
 ```
 uci set openvpn.Home="openvpn"
-uci set openvpn.Home.enabled="1"s
+uci set openvpn.Home.enabled="1"
 uci set openvpn.Home.config="/etc/openvpn/Home.ovpn"
 uci commit openvpn 
 /etc/init.d/openvpn restart
