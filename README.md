@@ -53,6 +53,9 @@ Subtarget (Generic)  --->
 Target Profile (Default Profile (all drivers))  --->
   GL.iNet GL-MiFi
 
+Extra packages  --->
+  automount
+
 Kernel modules  --->
   Filesystems  --->
     kmod-fs-ext4
@@ -71,30 +74,25 @@ Kernel modules  --->
 LuCI  --->
   Collections  --->
     luci
+    luci-ssl-openssl
   Modules  --->
     Translations  --->
       Chinese (zh-cn)
   Applications  --->
     luci-app-aria2
-    <!-- luci-app-arpbind -->
-    <!-- luci-app-autoreboot -->
+    luci-app-arpbind
+    luci-app-autoreboot
     luci-app-ddns
-    <!-- luci-app-filetransfer -->
-    <!-- luci-app-frpc -->
     luci-app-frpc
     luci-app-nlbwmon
+    luci-app-openvpn
     luci-app-qos
-    luci-app-samba
-    luci-app-shadowsocks-libev
     luci-app-sfe
     luci-app-sqm
     luci-app-ssr-plus
     luci-app-upnp
-    <!-- luci-app-vlmcsd -->
-  Themes  --->
-    luci-theme-material
-    luci-theme-openwrt
-    luci-theme-rosy
+    luci-app-vlmcsd
+    luci-app-vsftpd
   Protocols  --->
     luci-proto-3g
     luci-proto-openconnect
@@ -104,18 +102,16 @@ LuCI  --->
 Network  --->
   Download Manager  --->
     ariang
+  File Transfer  --->
     curl
     wget
   IP Addresses and Names  --->
     avahi-dbus-daemon
-    <!-- ddns-scripts_aliyun -->
+    ddns-scripts_aliyun
     ddns-scripts_cloudflare.com-v4
   VPN  --->
-    openvpn-easy-rsa
-    openvpn-openssl
-    <!-- openvpn-mbedtls -->
-  Web Servers/Proxies  --->
-    frpc
+    openvpn-mbedtls
+
 Utilities  --->
   Disc  --->
     blkid
@@ -125,7 +121,6 @@ Utilities  --->
     e2fsprogs
     f2fsck
 ```
-automount
 
 # Disable LTE modem when the lan is working
 
