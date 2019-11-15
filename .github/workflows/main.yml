@@ -29,19 +29,20 @@ jobs:
     - name: Clone
       run: |
         git clone https://github.com/coolsnowwolf/lede.git ./lede
+        wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./lede/include/target.mk
         cd ./lede
-        wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./include/target.mk
+        make defconfig
         wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/lede.config -O .config
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
     - name: Download Package
       run: |
-        cd ./lede && make download -j8
+        cd ./lede && make download -j8 V=s
 
     - name: Build
       run: |
-        cd openwrt
+        cd ./lede
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
