@@ -1,23 +1,21 @@
-name: CI
+name: Build Firmware
 
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-16.04
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-
     - name: Test
       run: |
         ls -lah
 
-    - name: Init
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Initialization Environment
       run: |
-        ls -lah
         sudo apt-get update
         sudo apt-get -y install build-essential asciidoc binutils \
         bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
@@ -31,26 +29,26 @@ jobs:
         libgd-dev bc lm-sensors libtirpc-dev \
         libavahi-client-dev libarchive-dev -y
 
-    - name: Clone
+    - name: Clone Lede Project
+      run: git clone https://github.com/coolsnowwolf/lede.git ./lede
+
+    - name: Using Openwrt Project Setting
+      run: wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./include/target.mk
+      working-directory: ./lede
+
+    - name: Setting GL-MiFi Menuconfig
       run: |
-        git clone https://github.com/coolsnowwolf/lede.git ./lede
-        wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./lede/include/target.mk
-        cd ./lede
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/lede.config -O .config
+        cp -fr lede.config ./lede/.config
         make defconfig
         make oldconfig
 
     - name: Download Package
-      run: |
-        cd ./lede && make download -j8 V=s
+      run: make download -j8 V=s
+      working-directory: ./lede
 
     - name: Build
-      run: |
-        cd ./lede
-        echo -e "$(nproc) thread build."
-        make -j$(nproc) V=s
+      run: echo -e "$(nproc) thread build." ; make -j$(nproc) V=s
+      working-directory: ./lede
 
     - name : Upload Artifact
       uses: actions/upload-artifact@master
