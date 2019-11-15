@@ -7,10 +7,6 @@ jobs:
     runs-on: ubuntu-16.04
 
     steps:
-    - name: Test
-      run: |
-        ls -lah
-
     - name: Checkout
       uses: actions/checkout@master
 
@@ -39,11 +35,14 @@ jobs:
     - name: Setting GL-MiFi Menuconfig
       run: |
         cp -fr lede.config ./lede/.config
-        make defconfig
-        make oldconfig
 
     - name: Download Package
-      run: make download -j8 V=s
+      run: |
+        ls -lha
+        make defconfig
+        make oldconfig
+        make download -j8 V=s
+        ls -lha
       working-directory: ./lede
 
     - name: Build
