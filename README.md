@@ -49,7 +49,7 @@ wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/openwrt.c
 ## Download Package
 
 ```
-make download V=s
+make download -j8 V=s
 ```
 
 ## Build image
