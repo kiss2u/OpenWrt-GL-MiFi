@@ -19,8 +19,7 @@ jobs:
         zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs \
         git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo \
         libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf \
-        automake libtool autopoint device-tree-compiler -y
-        sudo apt-get install libpam0g-dev \
+        automake libtool autopoint device-tree-compiler libpam0g-dev \
         libidn2-0-dev attr libpcre2-dev libexpat1-dev \
         libssh2-1-dev libgnutls-dev libldap2-dev libcap-dev liblzma-dev \
         libjansson-dev libpng-dev libupnp-dev \
@@ -32,9 +31,9 @@ jobs:
         git clone https://github.com/coolsnowwolf/lede.git ./lede
         cd ./lede
         wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./include/target.mk
+        wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/lede.config -O .config
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/lede.config -O .config
 
     - name: Download Package
       run: |
