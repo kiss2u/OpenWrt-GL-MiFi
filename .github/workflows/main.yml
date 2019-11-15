@@ -1,0 +1,53 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Init
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install build-essential asciidoc binutils \
+        bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
+        zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs \
+        git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo \
+        libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf \
+        automake libtool autopoint device-tree-compiler -y
+        sudo apt-get install libpam0g-dev \
+        libidn2-0-dev attr libpcre2-dev libexpat1-dev \
+        libssh2-1-dev libgnutls-dev libldap2-dev libcap-dev liblzma-dev \
+        libjansson-dev libpng-dev libupnp-dev \
+        libgd-dev bc lm-sensors libtirpc-dev \
+        libavahi-client-dev libarchive-dev -y
+
+    - name: Clone
+      run: |
+        git clone https://github.com/coolsnowwolf/lede.git ./lede
+        cd ./lede
+        wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./include/target.mk
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/lede.config -O .config
+
+    - name: Download Package
+      run: |
+        cd ./lede && make download -j8
+
+    - name: Build
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread build."
+        make -j$(nproc) V=s
+
+    - name : Upload Artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: Lede
+        path: lede/bin
