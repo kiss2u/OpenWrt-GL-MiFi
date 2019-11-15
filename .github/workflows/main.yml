@@ -11,8 +11,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
+    - name: Test
+      run: |
+        ls -lah
+
     - name: Init
       run: |
+        ls -lah
         sudo apt-get update
         sudo apt-get -y install build-essential asciidoc binutils \
         bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
@@ -50,5 +55,5 @@ jobs:
     - name : Upload Artifact
       uses: actions/upload-artifact@master
       with:
-        name: Lede
-        path: lede/bin
+        name: OpenWrt-GL-MiFi
+        path: lede/bin/targets/ar71xx/generic/
