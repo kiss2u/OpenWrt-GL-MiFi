@@ -61,4 +61,4 @@ jobs:
         file: lede/bin/targets/ar71xx/generic/openwrt-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin
         changelog: CHANGELOG.txt
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
