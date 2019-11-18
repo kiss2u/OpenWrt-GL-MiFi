@@ -82,8 +82,6 @@ Extra packages  --->
 
 Kernel modules  --->
   Filesystems  --->
-    <!-- kmod-fs-ext4
-    kmod-fs-vfat -->
     kmod-fs-xfs
   Network Support  --->
     kmod-tcp-bbr
@@ -92,46 +90,42 @@ Kernel modules  --->
     kmod-usb-net-rndis
     kmod-usb-serial
     kmod-usb-serial-option
-    <!-- kmod-usb-storage
-    kmod-usb2 -->
 
 LuCI  --->
   Collections  --->
     luci
-    <!-- luci-ssl-openssl -->
   Modules  --->
     Translations  --->
       Simplified Chinese (zh-cn)
   Applications  --->
-    luci-app-adbyby-plus
+    <!-- luci-app-adbyby-plus -->
     luci-app-aria2
     luci-app-arpbind
     luci-app-autoreboot
     luci-app-ddns
     luci-app-frpc
+    luci-app-netdata
     luci-app-nlbwmon
     luci-app-openvpn
     luci-app-openvpn-server
     luci-app-qos
-    luci-app-samba
+    luci-app-ramfree
+    luci-app-samba4
     luci-app-sfe
     luci-app-shairplay
     luci-app-sqm
     luci-app-ssr-plus
     luci-app-upnp
     luci-app-vlmcsd
-    <!-- luci-app-vsftpd -->
   Protocols  --->
-    luci-proto-3g
+    <!-- luci-proto-3g -->
     luci-proto-openconnect
     luci-proto-qmi
   default-settings
 
 Network  --->
-  Download Manager  --->
-    <!-- ariang -->
-  Filesystem  --->
-    netatalk
+  <!-- Filesystem  --->
+    netatalk -->
   File Transfer  --->
     <!-- curl -->
   IP Addresses and Names  --->
@@ -238,21 +232,3 @@ Utilities  --->
 ```
 * * * * * /bin/ping -I eth0 -c 3 114.114.114.114 &> /dev/null && /sbin/ifdown wwan; ubus call network reload || /sbin/ifup wwan; ubus call network reload
 ```
-
-WARNING: Makefile 'package/utils/busybox/Makefile' has a dependency on 'libpam', which does not exist
-WARNING: Makefile 'package/utils/busybox/Makefile' has a build dependency on 'libpam', which does not exist
-WARNING: Makefile 'package/network/utils/curl/Makefile' has a dependency on 'libgnutls', which does not exist
-WARNING: Makefile 'package/network/utils/curl/Makefile' has a dependency on 'libopenldap', which does not exist
-WARNING: Makefile 'package/network/utils/curl/Makefile' has a dependency on 'libidn2', which does not exist
-WARNING: Makefile 'package/network/utils/curl/Makefile' has a dependency on 'libssh2', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/network/utils/iproute2/Makefile' has a dependency on 'libcap', which does not exist
-WARNING: Makefile 'package/boot/kexec-tools/Makefile' has a dependency on 'liblzma', which does not exist
-WARNING: Makefile 'package/network/services/lldpd/Makefile' has a dependency on 'libnetsnmp', which does not exist
-WARNING: Makefile 'package/network/utils/nftables/Makefile' has a dependency on 'jansson', which does not exist
