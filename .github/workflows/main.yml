@@ -38,21 +38,27 @@ jobs:
 
     - name: Download Package
       run: |
-        ls -lha
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
         make oldconfig
         make download -j8 V=s
-        ls -lha
       working-directory: ./lede
 
     - name: Build
       run: echo -e "$(nproc) thread build." ; make -j$(nproc) V=s
       working-directory: ./lede
 
-    - name : Upload Artifact
-      uses: actions/upload-artifact@master
+    # - name : Upload Artifact
+    #   uses: actions/upload-artifact@master
+    #   with:
+    #     name: OpenWrt-GL-MiFi
+    #     path: lede/bin/targets/ar71xx/generic/
+
+    - name: Action Release
+      uses: yakuhzi/action-release@v1
       with:
-        name: OpenWrt-GL-MiFi
-        path: lede/bin/targets/ar71xx/generic/
+        file: lede/bin/targets/ar71xx/generic/openwrt-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin
+        changelog: CHANGELOG.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
