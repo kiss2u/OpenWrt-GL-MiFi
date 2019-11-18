@@ -10,20 +10,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Initialization Environment
-      run: |
-        sudo apt-get update
-        sudo apt-get install build-essential asciidoc binutils \
-        bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
-        zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs \
-        git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo \
-        libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf \
-        automake libtool autopoint device-tree-compiler libpam0g-dev \
-        libidn2-0-dev attr libpcre2-dev libexpat1-dev \
-        libssh2-1-dev libgnutls-dev libldap2-dev libcap-dev liblzma-dev \
-        libjansson-dev libpng-dev libupnp-dev \
-        libgd-dev bc lm-sensors libtirpc-dev \
-        libavahi-client-dev libarchive-dev -y
+    # - name: Initialization Environment
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install build-essential asciidoc binutils \
+    #     bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
+    #     zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs \
+    #     git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo \
+    #     libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf \
+    #     automake libtool autopoint device-tree-compiler libpam0g-dev \
+    #     libidn2-0-dev attr libpcre2-dev libexpat1-dev \
+    #     libssh2-1-dev libgnutls-dev libldap2-dev libcap-dev liblzma-dev \
+    #     libjansson-dev libpng-dev libupnp-dev \
+    #     libgd-dev bc lm-sensors libtirpc-dev \
+    #     libavahi-client-dev libarchive-dev -y
 
     - name: Clone Lede Project
       run: git clone https://github.com/coolsnowwolf/lede.git ./lede
@@ -35,25 +35,27 @@ jobs:
     - name: Setting GL-MiFi Menuconfig
       run: |
         cp -fr lede.config ./lede/.config
+        mkdir -p lede/bin/targets/ar71xx/generic
+        touch lede/bin/targets/ar71xx/generic/openwrt-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin
 
-    - name: Download Package
-      run: |
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        make defconfig
-        make oldconfig
-        make download -j8 V=s
-      working-directory: ./lede
+    # - name: Download Package
+    #   run: |
+    #     ./scripts/feeds update -a
+    #     ./scripts/feeds install -a
+    #     make defconfig
+    #     make oldconfig
+    #     make download -j8 V=s
+    #   working-directory: ./lede
 
-    - name: Build
-      run: echo -e "$(nproc) thread build." ; make -j$(nproc) V=s
-      working-directory: ./lede
+    # - name: Build
+    #   run: echo -e "$(nproc) thread build." ; make -j$(nproc) V=s
+    #   working-directory: ./lede
 
-    # - name : Upload Artifact
-    #   uses: actions/upload-artifact@master
-    #   with:
-    #     name: OpenWrt-GL-MiFi
-    #     path: lede/bin/targets/ar71xx/generic/
+    # # - name : Upload Artifact
+    # #   uses: actions/upload-artifact@master
+    # #   with:
+    # #     name: OpenWrt-GL-MiFi
+    # #     path: lede/bin/targets/ar71xx/generic/
 
     - name: Action Release
       uses: yakuhzi/action-release@v1
