@@ -15,9 +15,7 @@ bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
 zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs \
 git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo \
 libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf \
-automake libtool autopoint device-tree-compiler -y
-
-sudo apt-get install libpam0g-dev \
+automake libtool autopoint device-tree-compiler libpam0g-dev \
 libidn2-0-dev attr libpcre2-dev libexpat1-dev \
 libssh2-1-dev libgnutls-dev libldap2-dev libcap-dev liblzma-dev \
 libjansson-dev libpng-dev libupnp-dev \
@@ -107,18 +105,18 @@ LuCI  --->
     luci-app-netdata
     luci-app-nlbwmon
     luci-app-openvpn
-    luci-app-openvpn-server
+    <!-- luci-app-openvpn-server -->
     luci-app-qos
     luci-app-ramfree
     luci-app-samba4
     luci-app-sfe
-    luci-app-shairplay
+    <!-- luci-app-shairplay -->
     luci-app-sqm
     luci-app-ssr-plus
     luci-app-upnp
     luci-app-vlmcsd
   Protocols  --->
-    <!-- luci-proto-3g -->
+    luci-proto-3g
     luci-proto-openconnect
     luci-proto-qmi
   default-settings
