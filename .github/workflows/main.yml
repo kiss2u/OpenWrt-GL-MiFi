@@ -28,15 +28,25 @@ jobs:
     - name: Clone Lede Project
       run: git clone https://github.com/coolsnowwolf/lede.git ./lede
 
-    - name: Using Openwrt Project Setting
-      run: wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./include/target.mk
-      working-directory: ./lede
+    - name: Setting custom target
+      run: cp -fr target.mk ./lede/include/target.mk
 
     - name: Setting GL-MiFi Menuconfig
       run: |
         cp -fr lede.config ./lede/.config
 
-    - name: Download Package
+    - name: Add udpspeeder
+      run: |
+        mkdir package/udpspeeder
+        wget https://raw.githubusercontent.com/atrandys/openwrt-udp2raw-speeder/master/udpspeeder/Makefile  -O package/udpspeeder/Makefile
+
+        mkdir package/udp2raw
+        wget https://raw.githubusercontent.com/WouldChar/openwrt-udp2raw-speeder/master/udp2raw/Makefile -O package/udp2raw/Makefile
+
+        git clone https://github.com/atrandys/luci-udptools.git ./package/luci-udptools
+      working-directory: ./lede
+
+    - name: Make Config
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
@@ -45,7 +55,7 @@ jobs:
         make download -j8 V=s
       working-directory: ./lede
 
-    - name: Build
+    - name: Build firmware
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
