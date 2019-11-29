@@ -31,10 +31,6 @@ jobs:
     - name: Setting custom target
       run: cp -fr target.mk ./lede/include/target.mk
 
-    - name: Setting GL-MiFi Menuconfig
-      run: |
-        cp -fr lede.config ./lede/.config
-
     - name: Add udpspeeder
       run: |
         mkdir package/udpspeeder
@@ -50,6 +46,7 @@ jobs:
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        cp -fr ../lede.config ./.config
         make defconfig
         make oldconfig
         make download -j8 V=s
