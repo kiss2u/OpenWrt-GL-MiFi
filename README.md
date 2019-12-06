@@ -25,22 +25,23 @@ libavahi-client-dev libarchive-dev -y
 # Lede
 git clone https://github.com/coolsnowwolf/lede.git
 cd ./lede
+
 wget https://raw.githubusercontent.com/openwrt/openwrt/master/include/target.mk -O ./include/target.mk
+sed -i "s/dnsmasq/dnsmasq-full/g" ./include/target.mk
 ./scripts/feeds update -a
 ./scripts/feeds install -a
+
+
+mkdir package/udpspeeder
+wget https://raw.githubusercontent.com/atrandys/openwrt-udp2raw-speeder/master/udpspeeder/Makefile  -O package/udpspeeder/Makefile
+
+package/udp2raw
+wget https://raw.githubusercontent.com/WouldChar/openwrt-udp2raw-speeder/master/udp2raw/Makefile -O package/udp2raw/Makefile
+
+git clone https://github.com/atrandys/luci-udptools.git ./package/luci-udptools
 
 # Download GL-MiFi config
 wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/lede.config -O .config
-
-# Openwrt
-git clone https://github.com/openwrt/openwrt.git ./openwrt
-cd ./openwrt
-git checkout openwrt-19.07
-./scripts/feeds update -a
-./scripts/feeds install -a
-
-# Download GL-MiFi config
-wget https://raw.githubusercontent.com/buxiaomo/OpenWrt-GL-MiFi/master/openwrt.config -O .config
 ```
 
 
@@ -63,7 +64,6 @@ make dirclean && make clean && make dirclean
 ``` -->
 
 ## Packages list
-### lede
 
 ```
 Target System (x86)  --->
@@ -96,21 +96,15 @@ LuCI  --->
     Translations  --->
       Simplified Chinese (zh-cn)
   Applications  --->
-    <!-- luci-app-adbyby-plus -->
-    luci-app-aria2
-    luci-app-arpbind
-    luci-app-autoreboot
+    <!-- luci-app-aria2 -->
+    <!-- luci-app-arpbind -->
     luci-app-ddns
     luci-app-frpc
-    luci-app-netdata
     luci-app-nlbwmon
     luci-app-openvpn
-    <!-- luci-app-openvpn-server -->
+    luci-app-openvpn-server
     luci-app-qos
-    luci-app-ramfree
-    luci-app-samba4
     luci-app-sfe
-    <!-- luci-app-shairplay -->
     luci-app-sqm
     luci-app-ssr-plus
     luci-app-upnp
@@ -119,111 +113,29 @@ LuCI  --->
     luci-proto-3g
     luci-proto-openconnect
     luci-proto-qmi
+    luci-proto-relay
   default-settings
 
 Network  --->
-  <!-- Filesystem  --->
-    netatalk -->
-  File Transfer  --->
-    <!-- curl -->
   IP Addresses and Names  --->
     ddns-scripts_aliyun
     ddns-scripts_cloudflare.com-v4
-  VPN  --->
-    <!-- openvpn-easy-rsa
-    openvpn-openssl -->
+    ddns-scripts_freedns_42_pl
+    ddns-scripts_godaddy.com-v1
+    ddns-scripts_no-ip_com
+    ddns-scripts_nsupdate
+    ddns-scripts_route53-v1
 
 Utilities  --->
   Disc  --->
     blkid
     fdisk
+    gdisk
     lsblk
   Filesystem  --->
     e2fsprogs
     f2fsck
 ```
-
-### Openwrt
-
-```
-Target System (x86)  --->
-  Atheros AR7xxx/AR9xxx
-
-Subtarget (Generic)  --->
-  Generic
-
-Target Profile (Default Profile (all drivers))  --->
-  GL.iNet GL-MiFi
-
-Extra packages  --->
-  <!-- automount -->
-
-Kernel modules  --->
-  Filesystems  --->
-    kmod-fs-ext4
-    kmod-fs-vfat
-    kmod-fs-xfs
-  Network Support  --->
-    kmod-tcp-bbr
-  USB Support  --->
-    kmod-usb-net
-    kmod-usb-net-rndis
-    kmod-usb-serial
-    kmod-usb-serial-option
-    kmod-usb-storage
-    kmod-usb2
-
-LuCI  --->
-  Collections  --->
-    luci
-  Modules  --->
-    Translations  --->
-      Chinese (zh-cn)
-  Applications  --->
-    luci-app-acme
-    luci-app-aria2
-    luci-app-commands
-    luci-app-ddns
-    luci-app-nlbwmon
-    luci-app-openvpn
-    luci-app-qos
-    luci-app-samba
-    luci-app-shadowsocks-libev
-    <!-- luci-app-shairplay -->
-    luci-app-sqm
-    luci-app-upnp
-    <!-- luci-app-vnstat -->
-  Protocols  --->
-    luci-proto-3g
-    luci-proto-openconnect
-    luci-proto-qmi
-
-Network  --->
-  Download Manager  --->
-    ariang
-  File Transfer  --->
-    curl
-  IP Addresses and Names  --->
-    ddns-scripts_cloudflare.com-v4
-  VPN  --->
-    openvpn-easy-rsa
-    openvpn-openssl
-  acme-dnsapi
-
-Utilities  --->
-  Disc  --->
-    blkid
-    fdisk
-    lsblk
-  Filesystem  --->
-    e2fsprogs
-    f2fsck
-  Shells  --->
-    <!-- bash -->
-  dmesg
-  sysstat
-```
-
 
 # Disable LTE modem when the lan is working
 

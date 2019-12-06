@@ -31,22 +31,22 @@ jobs:
     - name: Setting custom target
       run: cp -fr target.mk ./lede/include/target.mk
 
-    - name: Add udpspeeder
-      run: |
-        mkdir package/udpspeeder
-        wget https://raw.githubusercontent.com/atrandys/openwrt-udp2raw-speeder/master/udpspeeder/Makefile  -O package/udpspeeder/Makefile
+    # - name: Add udpspeeder
+    #   run: |
+    #     mkdir package/udpspeeder
+    #     wget https://raw.githubusercontent.com/atrandys/openwrt-udp2raw-speeder/master/udpspeeder/Makefile  -O package/udpspeeder/Makefile
 
-        mkdir package/udp2raw
-        wget https://raw.githubusercontent.com/WouldChar/openwrt-udp2raw-speeder/master/udp2raw/Makefile -O package/udp2raw/Makefile
+    #     mkdir package/udp2raw
+    #     wget https://raw.githubusercontent.com/WouldChar/openwrt-udp2raw-speeder/master/udp2raw/Makefile -O package/udp2raw/Makefile
 
-        git clone https://github.com/atrandys/luci-udptools.git ./package/luci-udptools
-      working-directory: ./lede
+    #     git clone https://github.com/atrandys/luci-udptools.git ./package/luci-udptools
+    #   working-directory: ./lede
 
     - name: Make Config
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        cp -fr ../lede.config ./.config
+        cp -fr ../config ./.config
         make defconfig
         make oldconfig
         make download -j8 V=s
