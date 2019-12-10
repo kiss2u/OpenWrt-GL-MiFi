@@ -76,4 +76,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt-GL-MiFi
-        path: lede/bin/targets/ar71xx/generic/
+        path: openwrt/bin/targets/ar71xx/generic/
