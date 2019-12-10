@@ -23,51 +23,57 @@ jobs:
         libssh2-1-dev libgnutls-dev libldap2-dev libcap-dev liblzma-dev \
         libjansson-dev libpng-dev libupnp-dev \
         libgd-dev bc lm-sensors libtirpc-dev \
-        libavahi-client-dev libarchive-dev -y
+        libavahi-client-dev libarchive-dev mkisofs -y
 
-    - name: Clone Lede Project
-      run: git clone https://github.com/coolsnowwolf/lede.git ./lede
-
-    - name: Setting custom target
-      run: cp -fr target.mk ./lede/include/target.mk
-
-    # - name: Add udpspeeder
-    #   run: |
-    #     mkdir package/udpspeeder
-    #     wget https://raw.githubusercontent.com/atrandys/openwrt-udp2raw-speeder/master/udpspeeder/Makefile  -O package/udpspeeder/Makefile
-
-    #     mkdir package/udp2raw
-    #     wget https://raw.githubusercontent.com/WouldChar/openwrt-udp2raw-speeder/master/udp2raw/Makefile -O package/udp2raw/Makefile
-
-    #     git clone https://github.com/atrandys/luci-udptools.git ./package/luci-udptools
-    #   working-directory: ./lede
-
-    - name: Make Config
+    - name: Clone OpenWrt Project
       run: |
+        git clone https://github.com/openwrt/openwrt.git ./openwrt
+        cd ./openwrt
+        git checkout -b v18.06.4
+
+    - name: Update feeds
+      working-directory: ./openwrt
+      run: |
+        echo "src-git extra https://github.com/buxiaomo/openwrt-extra.git" >> feeds.conf.default
+        echo "src-git ssr https://github.com/buxiaomo/luci-app-ssr-plus.git" >> feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        cp -fr ../x86.config ./.config
+
+    - name: Make Config
+      working-directory: ./openwrt
+      run: |
+        cp -fr ../config ./.config
         make defconfig
         make oldconfig
-        make download -j8 V=s
-      working-directory: ./lede
 
-    - name: Build firmware
+    - name: Custom Settings
+      working-directory: ./openwrt
+      run: |
+        # NTP
+        echo "Settinng NTP Server"
+        sed -i "s/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g" ./package/base-files/files/bin/config_generate
+        sed -i "s/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g" ./package/base-files/files/bin/config_generate
+        sed -i "s/2.openwrt.pool.ntp.org/ntp3.aliyun.com/g" ./package/base-files/files/bin/config_generate
+        sed -i "s/3.openwrt.pool.ntp.org/ntp4.aliyun.com/g" ./package/base-files/files/bin/config_generate
+        
+        # Timezone
+        echo "Settinng Timezone"
+        sed -i "s/UTC/CST-8/g" ./package/base-files/files/bin/config_generate
+        sed -i "/CST-8/a set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
+
+    - name: Download package source code
+      working-directory: ./openwrt
+      run: |
+        make download -j$(nproc) V=s
+
+    - name: Compile firmware
+      working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
-      working-directory: ./lede
 
     - name : Upload Artifact
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt-GL-MiFi
         path: lede/bin/targets/ar71xx/generic/
-
-    # - name: Action Release
-    #   uses: yakuhzi/action-release@v1
-    #   with:
-    #     file: lede/bin/targets/ar71xx/generic/openwrt-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin
-    #     changelog: CHANGELOG.txt
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
