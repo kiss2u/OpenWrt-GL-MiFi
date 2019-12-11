@@ -96,41 +96,34 @@ LuCI  --->
     Translations  --->
       Simplified Chinese (zh-cn)
   Applications  --->
-    <!-- luci-app-aria2 -->
-    <!-- luci-app-arpbind -->
-    luci-app-ddns
+    luci-app-aria2
+    luci-app-arpbind
     luci-app-frpc
     luci-app-nlbwmon
     luci-app-openvpn
-    luci-app-openvpn-server
     luci-app-qos
-    luci-app-sfe
+    luci-app-samba
+    luci-app-serverchan
     luci-app-sqm
     luci-app-ssr-plus
     luci-app-upnp
     luci-app-vlmcsd
   Protocols  --->
-    luci-proto-3g
+    luci-proto-3g 
     luci-proto-openconnect
     luci-proto-qmi
-    luci-proto-relay
-  default-settings
+    luci-proto-wireguard
 
 Network  --->
-  IP Addresses and Names  --->
-    ddns-scripts_aliyun
-    ddns-scripts_cloudflare.com-v4
-    ddns-scripts_freedns_42_pl
-    ddns-scripts_godaddy.com-v1
-    ddns-scripts_no-ip_com
-    ddns-scripts_nsupdate
-    ddns-scripts_route53-v1
+  Download Manager  --->
+    ariang
 
 Utilities  --->
   Disc  --->
     blkid
     fdisk
     gdisk
+    hdparm
     lsblk
   Filesystem  --->
     e2fsprogs

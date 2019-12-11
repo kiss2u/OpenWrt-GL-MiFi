@@ -28,8 +28,8 @@ jobs:
     - name: Clone OpenWrt Project
       run: |
         git clone https://github.com/openwrt/openwrt.git ./openwrt
-        cd ./openwrt
-        git checkout -b v18.06.4
+        # cd ./openwrt
+        # git checkout -b v18.06.4
 
     - name: Update feeds
       working-directory: ./openwrt
@@ -55,7 +55,7 @@ jobs:
         sed -i "s/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g" ./package/base-files/files/bin/config_generate
         sed -i "s/2.openwrt.pool.ntp.org/ntp3.aliyun.com/g" ./package/base-files/files/bin/config_generate
         sed -i "s/3.openwrt.pool.ntp.org/ntp4.aliyun.com/g" ./package/base-files/files/bin/config_generate
-        
+
         # Timezone
         echo "Settinng Timezone"
         sed -i "s/UTC/CST-8/g" ./package/base-files/files/bin/config_generate

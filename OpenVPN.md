@@ -42,7 +42,7 @@ EOF
 uci set openvpn.Home="openvpn"
 uci set openvpn.Home.enabled="1"
 uci set openvpn.Home.config="/etc/openvpn/Home.ovpn"
-uci commit openvpn 
+uci commit openvpn
 
 # 重启openvpn
 /etc/init.d/openvpn restart
