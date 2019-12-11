@@ -28,8 +28,8 @@ jobs:
     - name: Clone OpenWrt Project
       run: |
         git clone https://github.com/openwrt/openwrt.git ./openwrt
-        # cd ./openwrt
-        # git checkout -b v18.06.4
+        cd ./openwrt
+        git checkout -b v18.06.4
 
     - name: Update feeds
       working-directory: ./openwrt
