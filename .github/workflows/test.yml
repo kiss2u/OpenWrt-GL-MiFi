@@ -30,14 +30,6 @@ jobs:
 
     - name: Test command
       run: |
-        mkdir tmp
-        echo "Home ${HOME}"
-        echo "File list 1"
-        ls
-        git clone https://github.com/openwrt/openwrt.git ./openwrt
-        echo "File list 2"
-        ls
-        echo "mkdir ${HOME}/output/firmware"
-        mkdir -p ${HOME}/output/firmware
-        echo "File List 3"
-        ls 
+        mkdir output
+        touch ${HOME}/output/aaa
+        ls ${HOME}/output
