@@ -22,6 +22,9 @@ Base system  --->
   ca-bundle
   ca-certificates
 
+Libraries  --->
+  libustream-openssl
+
 Extra packages  --->
   automount
 
