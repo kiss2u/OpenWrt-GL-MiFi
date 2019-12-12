@@ -93,15 +93,10 @@ jobs:
 
     - name: Finishing product
       run: |
-        export HOME_DIR=`pwd`
-        mkdir output/packages output/firmware
-
-        cd openwrt/bin/targets/*/*/packages
-        mv * ${HOME_DIR}/output/packages
-
-        rm -rf openwrt/bin/targets/*/*/packages
-
+        mkdir -p ${HOME}/output/firmware
         cd openwrt/bin/targets/*/*
+        mv ./packages/* ${HOME}/output/
+        rm -rf packages
         mv * ${HOME_DIR}/output/firmware
 
     - name: Archive openwrt packages
@@ -110,7 +105,7 @@ jobs:
         name: OpenWrt-GL-MiFi-Packages
         path: output/packages
 
-    - name: Archive openWrt GL-MiFi firmware
+    - name: Archive openwrt GL-MiFi firmware
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt-GL-MiFi
