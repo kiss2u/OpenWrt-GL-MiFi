@@ -45,6 +45,7 @@ jobs:
     - name: Load custom configuration
       working-directory: ./openwrt
       run: |
+        [ -d ../files ] && mv ../files ./files
         cp -fr ../config ./.config
         make defconfig
 

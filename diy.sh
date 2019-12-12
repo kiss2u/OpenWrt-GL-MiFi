@@ -1,9 +1,4 @@
 #!/bin/bash
-# IP address
-echo "Settinng IP address"
-sed -i "s/192.168.1.1/172.16.100.1/g" .config
-sed -i "s/255.255.255.0/255.255.0.0/g" .config
-sed -i "s/192.168.1.255/172.16.100.255/g" .config
 
 # NTP
 echo "Settinng NTP Server"
