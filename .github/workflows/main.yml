@@ -1,4 +1,4 @@
-name: Firmware
+name: OpenWrt Firmware For GL-MiFi
 
 on: [push]
 
