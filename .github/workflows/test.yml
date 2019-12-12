@@ -31,8 +31,18 @@ jobs:
     - name: Test command
       run: |
         HOME_DIR=`pwd`
-        mkdir -p ${HOME_DIR}/tmp
-        ls -ls
-        echo "------------"        
-        touch ${HOME_DIR}/tmp/aaa
-        ls ${HOME_DIR}/tmp
+        echo "${HOME_DIR}"
+        echo "--------------------------------"
+        mkdir -p ${HOME_DIR}/output/firmware
+        echo "--------------------------------"
+        ls -l
+        mkdir -p openwrt/bin/targets/a/b/packages
+        touch  openwrt/bin/targets/a/b/packages/aaa
+        touch  openwrt/bin/targets/a/b/fff
+        echo "--------------------------------"
+        cd openwrt/bin/targets/*/*
+        mv ./packages/* ${HOME_DIR}/output/
+        rm -rf packages
+        mv * ${HOME_DIR}/output/firmware
+        echo "--------------------------------"
+        ls -l ${HOME_DIR}/output/firmware ${HOME_DIR}/output/packages
