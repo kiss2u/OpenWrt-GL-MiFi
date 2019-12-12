@@ -41,7 +41,7 @@ jobs:
         touch  openwrt/bin/targets/a/b/fff
         echo "--------------------------------"
         cd openwrt/bin/targets/*/*
-        mv ./packages/* ${HOME_DIR}/output/
+        mv ./packages ${HOME_DIR}/output/
         rm -rf packages
         mv * ${HOME_DIR}/output/firmware
         echo "--------------------------------"
