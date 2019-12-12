@@ -12,6 +12,8 @@ jobs:
 
     - name: Initialization Environment
       run: |
+        sudo timedatectl set-timezone Asia/Shanghai
+        date
         sudo apt-get update
         sudo apt-get install build-essential asciidoc binutils \
         bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
