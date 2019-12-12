@@ -60,7 +60,7 @@ jobs:
       working-directory: ./openwrt
       run: |
         [ -d ../files ] && mv ../files ./files
-        cp -fr ../config ./.config
+        [ -f ../config ] && cp -fr ../config ./.config
         make defconfig
 
     - name: Custom settings

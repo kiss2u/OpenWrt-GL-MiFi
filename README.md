@@ -19,6 +19,7 @@ Target Profile (Default Profile (all drivers))  --->
   GL.iNet GL-MiFi
 
 Base system  --->
+  ca-bundle
   ca-certificates
 
 Extra packages  --->
