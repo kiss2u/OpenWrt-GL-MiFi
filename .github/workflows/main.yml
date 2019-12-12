@@ -81,4 +81,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt-Firmware
-        path: openwrt/bin/targets/*/generic/
+        path: openwrt/bin/targets/
