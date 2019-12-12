@@ -26,54 +26,59 @@ jobs:
         libavahi-client-dev libarchive-dev mkisofs -y
 
     - name: Clone OpenWrt Project
+      env: 
+        REPO_URL: https://github.com/openwrt/openwrt.git
+        REPO_BRANCH: v18.06.4
       run: |
-        git clone https://github.com/openwrt/openwrt.git ./openwrt
-        # cd ./openwrt
-        # git checkout -b v18.06.4
+        git clone -b ${REPO_BRANCH} ${REPO_URL} ./openwrt
+
+    - name: Add feeds
+      run: |
+        [ -f ./feeds.conf.default ] && cat ./feeds.conf.default >> ./openwrt/feeds.conf.default
 
     - name: Update feeds
       working-directory: ./openwrt
       run: |
-        echo "src-git extra https://github.com/buxiaomo/openwrt-extra.git" >> feeds.conf.default
-        echo "src-git ssr https://github.com/buxiaomo/luci-app-ssr-plus.git" >> feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Make Config
+    - name: Load custom configuration
       working-directory: ./openwrt
       run: |
         cp -fr ../config ./.config
         make defconfig
-        make oldconfig
 
     - name: Custom Settings
+      env: 
+        FILE_NAME: "diy.sh"
       working-directory: ./openwrt
       run: |
-        # NTP
-        echo "Settinng NTP Server"
-        sed -i "s/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g" ./package/base-files/files/bin/config_generate
-        sed -i "s/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g" ./package/base-files/files/bin/config_generate
-        sed -i "s/2.openwrt.pool.ntp.org/ntp3.aliyun.com/g" ./package/base-files/files/bin/config_generate
-        sed -i "s/3.openwrt.pool.ntp.org/ntp4.aliyun.com/g" ./package/base-files/files/bin/config_generate
-
-        # Timezone
-        echo "Settinng Timezone"
-        sed -i "s/UTC/CST-8/g" ./package/base-files/files/bin/config_generate
-        sed -i "/CST-8/a set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
+        [ -f ../${FILE_NAME} ] && (
+          cp -fr ../${FILE_NAME} ./${FILE_NAME}
+          chmod +x ./${FILE_NAME}
+          ./${FILE_NAME}
+        )
 
     - name: Download package source code
       working-directory: ./openwrt
       run: |
         make download -j$(nproc) V=s
 
-    - name: Compile firmware
+    - name: Multi-thread compile
       working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
+    - name: Single-thread compile
+      if: failure()
+      working-directory: ./openwrt
+      run: |
+        cd openwrt
+        make -j1 V=s
+
     - name : Upload Artifact
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt-GL-MiFi
-        path: openwrt/bin/targets/ar71xx/generic/
+        name: OpenWrt-Firmware
+        path: openwrt/bin/targets/*/generic/

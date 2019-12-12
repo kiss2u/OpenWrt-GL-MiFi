@@ -1,0 +1,2 @@
+src-git extra https://github.com/buxiaomo/openwrt-extra.git
+src-git ssr https://github.com/buxiaomo/luci-app-ssr-plus.git
