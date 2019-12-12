@@ -30,6 +30,9 @@ jobs:
 
     - name: Test command
       run: |
-        mkdir tmp
-        touch ${HOME}/tmp/aaa
-        ls ${HOME}/tmp
+        HOME_DIR=`pwd`
+        mkdir -p ${HOME_DIR}/tmp
+        ls -ls
+        echo "------------"        
+        touch ${HOME_DIR}/tmp/aaa
+        ls ${HOME_DIR}/tmp
