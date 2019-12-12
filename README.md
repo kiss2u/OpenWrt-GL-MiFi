@@ -6,6 +6,13 @@ if you want to Custom configuration, you can modify the `diy.sh` file.
 
 if you want to add extend feeds, you can modify the `feeds.conf.default` file.
 
+
+## Defualt password
+
+root: `root`
+
+wifi: `123456789`
+
 ## Packages list
 
 ```
