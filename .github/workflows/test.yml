@@ -30,6 +30,6 @@ jobs:
 
     - name: Test command
       run: |
-        mkdir output
-        touch ${HOME}/output/aaa
-        ls ${HOME}/output
+        mkdir tmp
+        touch ${HOME}/tmp/aaa
+        ls ${HOME}/tmp
