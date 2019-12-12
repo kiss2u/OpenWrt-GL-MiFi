@@ -30,9 +30,12 @@ jobs:
 
         git clone https://github.com/openwrt/openwrt.git ./openwrt
 
-    - name: Initialization environment
+    - name: Test command
       run: |
-        echo ${HOME}
+        echo "Home ${HOME}"
+        echo "File list 1"
         ls
+        echo "mkdir ${HOME}/output/firmware"
         mkdir -p ${HOME}/output/firmware
+        echo "File List 2"
         ls 
