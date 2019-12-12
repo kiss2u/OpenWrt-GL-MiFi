@@ -1,17 +1,19 @@
 name: Build Firmware
 
-on: 
-  release:
-    types: [published]
-  push:
-    branches: 
-      - master
-    paths:
-      - 'config'
-      - 'files'
-      - 'feeds.conf.default'
-  # schedule:
-  #   - cron: 0 2 * * 1-5
+on: [push]
+
+# on: 
+#   release:
+#     types: [published]
+#   push:
+#     branches: 
+#       - master
+#     paths:
+#       - 'config'
+#       - 'files'
+#       - 'feeds.conf.default'
+#   schedule:
+#     - cron: 0 2 * * 1-5
 
 jobs:
   build:
@@ -23,6 +25,7 @@ jobs:
 
     - name: Initialization environment
       run: |
+        echo ${HOME}
         sudo timedatectl set-timezone Asia/Shanghai
         sudo apt-get update
         sudo apt-get install build-essential asciidoc binutils \
@@ -98,7 +101,7 @@ jobs:
 
         rm -rf openwrt/bin/targets/*/*/packages
 
-        cd openwrt/bin/targets/*/*/
+        cd openwrt/bin/targets/*/*
         mv * ${HOME_DIR}/output/firmware
 
     - name: Archive openwrt packages
