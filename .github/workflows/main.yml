@@ -1,6 +1,17 @@
 name: Build Firmware
 
-on: [push]
+on: 
+  release:
+    types: [published]
+  push:
+    branches: 
+      - master
+    paths:
+      - 'config'
+      - 'files'
+      - 'feeds.conf.default'
+  # schedule:
+  #   - cron: 0 2 * * 1-5
 
 jobs:
   build:
@@ -10,10 +21,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Initialization Environment
+    - name: Initialization environment
       run: |
         sudo timedatectl set-timezone Asia/Shanghai
-        date
         sudo apt-get update
         sudo apt-get install build-essential asciidoc binutils \
         bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip \
@@ -26,9 +36,8 @@ jobs:
         libjansson-dev libpng-dev libupnp-dev \
         libgd-dev bc lm-sensors libtirpc-dev \
         libavahi-client-dev libarchive-dev mkisofs -y
-        
 
-    - name: Clone OpenWrt Project
+    - name: Clone openWrt project
       env: 
         REPO_URL: https://github.com/openwrt/openwrt.git
         REPO_BRANCH: master
@@ -51,7 +60,7 @@ jobs:
         cp -fr ../config ./.config
         make defconfig
 
-    - name: Custom Settings
+    - name: Custom settings
       env: 
         FILE_NAME: "diy.sh"
       working-directory: ./openwrt
@@ -79,16 +88,27 @@ jobs:
       run: |
         make -j1 V=s
 
-    - name: Organize files
-      if: always()
+    - name: Finishing product
       run: |
-        cd openwrt/bin/targets/*/*
-        rm -rf packages
-        echo "::set-env name=FIRMWARE::$(pwd)"
+        export HOME_DIR=`pwd`
+        mkdir output/packages output/firmware
 
-    - name: Upload firmware
+        cd openwrt/bin/targets/*/*/packages
+        mv * ${HOME_DIR}/output/packages
+
+        rm -rf openwrt/bin/targets/*/*/packages
+
+        cd openwrt/bin/targets/*/*/
+        mv * ${HOME_DIR}/output/firmware
+
+    - name: Archive openwrt packages
       uses: actions/upload-artifact@master
-      if: always()
+      with:
+        name: OpenWrt-GL-MiFi-Packages
+        path: output/packages
+
+    - name: Archive openWrt GL-MiFi firmware
+      uses: actions/upload-artifact@master
       with:
         name: OpenWrt-GL-MiFi
-        path: ${{ env.FIRMWARE }}
+        path: output/firmware

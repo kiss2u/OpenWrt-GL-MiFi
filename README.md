@@ -65,6 +65,7 @@ Network  --->
   VPN  --->
     openvpn-easy-rsa
     openvpn-openssl
+  hostapd
 
 Utilities  --->
   Disc  --->
