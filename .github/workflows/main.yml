@@ -32,7 +32,7 @@ jobs:
       run: |
         git clone -b ${REPO_BRANCH} ${REPO_URL} ./openwrt
 
-    - name: Add feeds
+    - name: Add extend feeds
       run: |
         [ -f ./feeds.conf.default ] && cat ./feeds.conf.default >> ./openwrt/feeds.conf.default
 
