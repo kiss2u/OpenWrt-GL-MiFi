@@ -28,14 +28,16 @@ jobs:
         sudo apt-get update
         sudo apt-get install git -y
 
-        git clone https://github.com/openwrt/openwrt.git ./openwrt
-
     - name: Test command
       run: |
+        mkdir tmp
         echo "Home ${HOME}"
         echo "File list 1"
         ls
+        git clone https://github.com/openwrt/openwrt.git ./openwrt
+        echo "File list 2"
+        ls
         echo "mkdir ${HOME}/output/firmware"
         mkdir -p ${HOME}/output/firmware
-        echo "File List 2"
+        echo "File List 3"
         ls 
