@@ -40,7 +40,7 @@ jobs:
         libgd-dev bc lm-sensors libtirpc-dev \
         libavahi-client-dev libarchive-dev mkisofs -y
 
-    - name: Clone openWrt project
+    - name: Clone openwrt project
       env: 
         REPO_URL: https://github.com/openwrt/openwrt.git
         REPO_BRANCH: master
@@ -91,12 +91,13 @@ jobs:
       run: |
         make -j1 V=s
 
-    - name: Finishing product
+    - name: Make the product
       run: |
-        mkdir -p ${HOME}/output/firmware
+        HOME_DIR=`pwd`
+        mkdir -p ${HOME_DIR}/output/firmware
         cd openwrt/bin/targets/*/*
-        mv ./packages/* ${HOME}/output/
-        rm -rf packages
+        mv ./packages ${HOME_DIR}/output/
+        rm -rf ./packages
         mv * ${HOME_DIR}/output/firmware
 
     - name: Archive openwrt packages
