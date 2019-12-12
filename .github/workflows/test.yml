@@ -1,0 +1,29 @@
+name: Build Firmware
+
+on: [push]
+
+# on: 
+#   release:
+#     types: [published]
+#   push:
+#     branches: 
+#       - master
+#     paths:
+#       - 'config'
+#       - 'files'
+#       - 'feeds.conf.default'
+#   schedule:
+#     - cron: 0 2 * * 1-5
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Initialization environment
+      run: |
+        echo ${HOME}
+        ls 
