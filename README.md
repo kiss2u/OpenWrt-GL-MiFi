@@ -18,6 +18,9 @@ Subtarget (Generic)  --->
 Target Profile (Default Profile (all drivers))  --->
   GL.iNet GL-MiFi
 
+Base system  --->
+  ca-certificates
+
 Extra packages  --->
   automount
 
@@ -46,7 +49,6 @@ LuCI  --->
     luci-app-openvpn
     luci-app-qos
     luci-app-samba
-    luci-app-serverchan
     luci-app-sqm
     luci-app-ssr-plus
     luci-app-upnp
@@ -60,13 +62,14 @@ LuCI  --->
 Network  --->
   Download Manager  --->
     ariang
+  VPN  --->
+    openvpn-easy-rsa
+    openvpn-openssl
 
 Utilities  --->
   Disc  --->
     blkid
     fdisk
-    gdisk
-    hdparm
     lsblk
   Filesystem  --->
     e2fsprogs

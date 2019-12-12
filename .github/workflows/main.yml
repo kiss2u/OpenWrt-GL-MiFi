@@ -28,7 +28,7 @@ jobs:
     - name: Clone OpenWrt Project
       env: 
         REPO_URL: https://github.com/openwrt/openwrt.git
-        REPO_BRANCH: v18.06.4
+        REPO_BRANCH: master
       run: |
         git clone -b ${REPO_BRANCH} ${REPO_URL} ./openwrt
 
@@ -39,8 +39,7 @@ jobs:
     - name: Update feeds
       working-directory: ./openwrt
       run: |
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
+        ./scripts/feeds update -a && ./scripts/feeds install -a
 
     - name: Load custom configuration
       working-directory: ./openwrt
@@ -77,8 +76,16 @@ jobs:
       run: |
         make -j1 V=s
 
-    - name : Upload Artifact
+    - name: Organize files
+      if: always()
+      run: |
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        echo "::set-env name=FIRMWARE::$(pwd)"
+
+    - name: Upload firmware
       uses: actions/upload-artifact@master
+      if: always()
       with:
-        name: OpenWrt-Firmware
-        path: openwrt/bin/targets/
+        name: OpenWrt-GL-MiFi
+        path: ${{ env.FIRMWARE }}
