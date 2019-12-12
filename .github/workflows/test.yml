@@ -1,4 +1,4 @@
-name: Build Firmware
+name: Test Firmware
 
 on: [push]
 
@@ -25,5 +25,14 @@ jobs:
 
     - name: Initialization environment
       run: |
+        sudo apt-get update
+        sudo apt-get install git -y
+
+        git clone https://github.com/openwrt/openwrt.git ./openwrt
+
+    - name: Initialization environment
+      run: |
         echo ${HOME}
+        ls
+        mkdir -p ${HOME}/output/firmware
         ls 
