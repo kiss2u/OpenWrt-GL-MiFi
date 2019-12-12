@@ -24,6 +24,7 @@ jobs:
         libjansson-dev libpng-dev libupnp-dev \
         libgd-dev bc lm-sensors libtirpc-dev \
         libavahi-client-dev libarchive-dev mkisofs -y
+        
 
     - name: Clone OpenWrt Project
       env: 
